@@ -75,6 +75,5 @@ http.createServer((req, res) =>
     });
 }).listen(PORT, '127.0.0.1', () =>
 {
-    console.log(`LittleJS dev server running at http://localhost:${PORT}`);
-    console.log(`Starter project: http://localhost:${PORT}/examples/starter/`);
+    console.log(`Open http://localhost:${PORT}/examples/starter/`);
 });

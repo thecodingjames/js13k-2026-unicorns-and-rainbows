@@ -1,10 +1,3 @@
-/*
-    LittleJS JS13K Starter Game
-    - For size limited projects
-    - Includes all core engine features
-    - Builds to 7kb zip file
-*/
-
 'use strict';
 
 // sound effects
@@ -113,5 +106,4 @@ function gameRenderPost()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Startup LittleJS Engine
-engineInit(gameInit, gameUpdate, gameUpdatePost, gameRender, gameRenderPost, ['tiles.png']);
+engineInit(gameInit, gameUpdate, gameUpdatePost, gameRender, gameRenderPost, ['src/tiles.png']);

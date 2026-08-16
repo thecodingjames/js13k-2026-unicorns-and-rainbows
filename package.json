@@ -23,10 +23,10 @@
   },
   "homepage": "https://github.com/KilledByAPixel/LittleJS",
   "scripts": {
-    "start": "node serve.js",
-    "build": "node examples/starter/build.mjs",
-    "build:engine": "node src/engineBuild.mjs",
-    "test": "node test/smoke.mjs"
+    "start": "node littlejs/serve.js",
+    "build": "node littlejs/examples/starter/build.mjs",
+    "build:engine": "node littlejs/src/engineBuild.mjs",
+    "test": "node littlejs/test/smoke.mjs"
   },
   "devDependencies": {
     "ect-bin": "~1.4.1",

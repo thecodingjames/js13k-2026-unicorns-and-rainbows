@@ -69,11 +69,11 @@ const sourceFiles =
     `../../src/engine.js`,
 
     // game files
-    'game.js',
+    'src/game.js',
 ];
 const dataFiles =
 [
-    'tiles.png',
+    'src/tiles.png',
     // add your game's data files here
 ];
 
