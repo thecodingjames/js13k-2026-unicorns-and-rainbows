@@ -106,4 +106,4 @@ function gameRenderPost()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-engineInit(gameInit, gameUpdate, gameUpdatePost, gameRender, gameRenderPost, ['src/tiles.png']);
+engineInit(gameInit, gameUpdate, gameUpdatePost, gameRender, gameRenderPost, ['tiles.png']);

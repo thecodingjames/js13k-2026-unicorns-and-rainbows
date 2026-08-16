@@ -17,7 +17,7 @@ import ectLocation from 'ect-bin';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const PROGRAM_TITLE = 'LittleJS JS13K Project';
+const PROGRAM_TITLE = 'Spectrum Run';
 const PROGRAM_NAME = 'game';
 const BUILD_FOLDER = 'build';
 const SIZE_LIMIT = 13312; // JS13K limit in bytes
@@ -69,11 +69,11 @@ const sourceFiles =
     `../../src/engine.js`,
 
     // game files
-    'src/game.js',
+    'game.js',
 ];
 const dataFiles =
 [
-    'src/tiles.png',
+    'tiles.png',
     // add your game's data files here
 ];
 
@@ -82,6 +82,7 @@ const startTime = Date.now();
 
 // always run relative to this script's folder so npm run build works from anywhere
 process.chdir(__dirname);
+console.log(__dirname)
 
 try
 {
@@ -228,7 +229,7 @@ function htmlBuildStep(filename)
 function zipBuildStep(filename)
 {
     console.log(`Zipping...`);
-    const args = ['-9', '-strip', '-zip', `../${PROGRAM_NAME}.zip`, 'index.html', ...dataFiles];
+    const args = ['-9', '-strip', '-zip', `../../../../${PROGRAM_NAME}.zip`, 'index.html', ...dataFiles];
 
     // run ect zip compressor
     try
