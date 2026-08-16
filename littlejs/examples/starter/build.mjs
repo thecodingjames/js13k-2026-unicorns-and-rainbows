@@ -18,6 +18,7 @@ import ectLocation from 'ect-bin';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const PROGRAM_TITLE = 'Spectrum Run';
+const PROGRAM_ZIP = `../../../../${PROGRAM_TITLE.toLowerCase().replace(' ', '_')}`
 const PROGRAM_NAME = 'game';
 const BUILD_FOLDER = 'build';
 const SIZE_LIMIT = 13312; // JS13K limit in bytes
@@ -82,13 +83,12 @@ const startTime = Date.now();
 
 // always run relative to this script's folder so npm run build works from anywhere
 process.chdir(__dirname);
-console.log(__dirname)
 
 try
 {
     // remove old files and setup build folder
     fs.rmSync(BUILD_FOLDER, { recursive: true, force: true });
-    fs.rmSync(`${PROGRAM_NAME}.zip`, { force: true });
+    fs.rmSync(`${PROGRAM_ZIP}.zip`, { force: true });
     fs.mkdirSync(BUILD_FOLDER);
 
     // copy data files
@@ -105,11 +105,11 @@ try
 catch (e) { handleError(e, 'Build failed!'); }
 
 // report size against the JS13K budget
-const size = fs.statSync(`${PROGRAM_NAME}.zip`).size;
+const size = fs.statSync(`${PROGRAM_ZIP}.zip`).size;
 const percent = (100*size/SIZE_LIMIT).toFixed(1);
 console.log('');
 console.log(`Build completed in ${((Date.now() - startTime)/1e3).toFixed(2)} seconds!`);
-console.log(`${PROGRAM_NAME}.zip: ${size} / ${SIZE_LIMIT} bytes (${percent}%)`);
+console.log(`${size} / ${SIZE_LIMIT} bytes (${percent}%)`);
 if (size > SIZE_LIMIT)
 {
     console.error(`OVER BUDGET by ${size - SIZE_LIMIT} bytes!`);
@@ -229,7 +229,7 @@ function htmlBuildStep(filename)
 function zipBuildStep(filename)
 {
     console.log(`Zipping...`);
-    const args = ['-9', '-strip', '-zip', `../../../../${PROGRAM_NAME}.zip`, 'index.html', ...dataFiles];
+    const args = ['-9', '-strip', '-zip', `../${PROGRAM_ZIP}.zip`, 'index.html', ...dataFiles];
 
     // run ect zip compressor
     try
