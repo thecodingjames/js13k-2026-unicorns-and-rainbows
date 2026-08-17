@@ -1,109 +1,74 @@
 'use strict';
 
-// sound effects
-const sound_click = new Sound([1,.5]);
+const WORLD_WIDTH = 1280
+const WORLD_HEIGHT = 800
+const WORLD_SCALE = 32
 
-// game variables
-let particleEmitter;
+function x(value) {
+  return WORLD_WIDTH / WORLD_SCALE * value   
+}
 
-// WebGL can be removed to save ~963 bytes - see "Disabling WebGL" in README.md
+function y(value) {
+  return WORLD_HEIGHT / WORLD_SCALE * value   
+}
 
 ///////////////////////////////////////////////////////////////////////////////
+// _init
 function gameInit()
 {
-    // create tile collision and visible tile layer
-    initTileCollision(vec2(32,16));
-    const pos = vec2();
-    const tileLayer = new TileLayer(pos, tileCollisionSize);
-
-    // get level data from the tiles image
-    const tileImage = textureInfos[0].image;
-    mainContext.drawImage(tileImage, 0, 0);
-    const imageData = mainContext.getImageData(0, 0, tileImage.width, tileImage.height).data;
-
-    for (pos.x = tileCollisionSize.x; pos.x--;)
-    for (pos.y = tileCollisionSize.y; pos.y--;)
-    {
-        // check if this pixel is set
-        const i = pos.x + tileImage.width*(17 + tileCollisionSize.y - pos.y);
-        if (!imageData[4*i])
-            continue;
-
-        // set tile data
-        const tileIndex = 1;
-        const direction = randInt(4)
-        const mirror = randInt(2);
-        const color = randColor();
-        const data = new TileLayerData(tileIndex, direction, mirror, color);
-        tileLayer.setData(pos, data);
-        setTileCollisionData(pos, 1);
-    }
-
-    // draw tile layer with new data
-    tileLayer.tileInfo = tile(0, 16, 0, 1); // 16x16 tiles with 1 pixel padding
-    tileLayer.redraw();
-
-    // setup camera
-    cameraPos = vec2(16,8);
-    cameraScale = 48;
-
-    // enable gravity
-    gravity.y = -.01;
-
-    // create particle emitter
-    particleEmitter = new ParticleEmitter(
-        vec2(16,9), 0,      // emitPos, emitAngle
-        1, 0, 500, PI,      // emitSize, emitTime, emitRate, emiteCone
-        tile(0, 16, 0, 1),  // tileIndex, tileSize
-        new Color(1,1,1),   new Color(0,0,0),   // colorStartA, colorStartB
-        new Color(0,0,0,0), new Color(0,0,0,0), // colorEndA, colorEndB
-        2, .2, .2, .1, .05, // time, sizeStart, sizeEnd, speed, angleSpeed
-        .99, 1, 1, PI,      // damping, angleDamping, gravityScale, cone
-        .05, .5, 1, 1       // fadeRate, randomness, collide, additive
-    );
-    particleEmitter.restitution = .3; // bounce when it collides
-    particleEmitter.trailScale = 2;  // stretch in direction of motion
+  canvasFixedSize = vec2(WORLD_WIDTH, WORLD_HEIGHT);
+  cameraScale = WORLD_SCALE;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// _update
 function gameUpdate()
 {
-    if (mouseWasPressed(0))
-    {
-        // play sound when mouse is pressed
-        sound_click.play(mousePos);
 
-        // change particle color and set to fade out
-        particleEmitter.colorStartA = new Color;
-        particleEmitter.colorStartB = randColor();
-        particleEmitter.colorEndA = particleEmitter.colorStartA.scale(1,0);
-        particleEmitter.colorEndB = particleEmitter.colorStartB.scale(1,0);
-    }
-
-    // move particles to mouse location if on screen
-    if (mousePosScreen.x)
-        particleEmitter.pos = mousePos;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+
 function gameUpdatePost()
 {
 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// _render
 function gameRender()
 {
     // draw a grey square in the background without using webgl
-    drawRect(vec2(16,8), vec2(20,14), new Color(.6,.6,.6), 0, 0);
+    drawRect(vec2(0,0),vec2(x(100), y(0.5)), new Color(.6,.6,.6), 0, 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 function gameRenderPost()
 {
-    // draw to overlay canvas for hud rendering
-    drawTextScreen('LittleJS JS13K Demo', vec2(mainCanvasSize.x/2, 70), 80);
+  const ctx = mainContext;
+
+  ctx.save();
+
+  ctx.font = 'bold 120px Arial';
+  ctx.textAlign = 'center';
+
+  const start  = worldToScreen(new vec2(x(0), y(0.25)))
+  const width = 445
+
+  const gradient = ctx.createLinearGradient(start.x - width / 2, start.y, start.x + width / 2, start.y);
+  gradient.addColorStop(0, 'red');
+  gradient.addColorStop(.166, 'orange');
+  gradient.addColorStop(.332, 'yellow');
+  gradient.addColorStop(.498, 'green');
+  gradient.addColorStop(.664, 'blue');
+  gradient.addColorStop(.83, 'indigo');
+  gradient.addColorStop(1, 'violet');
+
+  ctx.fillStyle = gradient;
+  ctx.fillText('Spectrum', start.x, start.y, width);
+
+  ctx.restore();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-engineInit(gameInit, gameUpdate, gameUpdatePost, gameRender, gameRenderPost, ['tiles.png']);
+engineInit(gameInit, gameUpdate, gameUpdatePost, gameRender, gameRenderPost);
