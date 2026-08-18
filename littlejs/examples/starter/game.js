@@ -1,8 +1,8 @@
 'use strict';
 
-const WORLD_WIDTH = 1280
-const WORLD_HEIGHT = 800
-const WORLD_SCALE = 32
+const WORLD_WIDTH = 1920
+const WORLD_HEIGHT = 1080
+const WORLD_SCALE = 64
 
 function x(value) {
   return WORLD_WIDTH / WORLD_SCALE * value   
@@ -49,11 +49,11 @@ function gameRenderPost()
 
   ctx.save();
 
-  ctx.font = 'bold 120px Arial';
+  ctx.font = 'bold 160px Arial';
   ctx.textAlign = 'center';
 
   const start  = worldToScreen(new vec2(x(0), y(0.25)))
-  const width = 445
+  const width = 650
 
   const gradient = ctx.createLinearGradient(start.x - width / 2, start.y, start.x + width / 2, start.y);
   gradient.addColorStop(0, 'red');
@@ -64,8 +64,15 @@ function gameRenderPost()
   gradient.addColorStop(.83, 'indigo');
   gradient.addColorStop(1, 'violet');
 
+
   ctx.fillStyle = gradient;
   ctx.fillText('Spectrum', start.x, start.y, width);
+
+  ctx.fillStyle = 'white';
+  ctx.fillText('ru', start.x + 129, start.y, width - 510);
+  ctx.fillText('n', start.x + 240, start.y, width - 570);
+
+  // ctx.fillText('run', start.x + 172, start.y, width - 424);
 
   ctx.restore();
 }
