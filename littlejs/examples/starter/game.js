@@ -64,7 +64,6 @@ function gameRenderPost()
   gradient.addColorStop(.83, 'indigo');
   gradient.addColorStop(1, 'violet');
 
-
   ctx.fillStyle = gradient;
   ctx.fillText('Spectrum', start.x, start.y, width);
 

@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/KilledByAPixel/LittleJS",
   "scripts": {
-    "start": "node littlejs/serve.js",
+    "start": "browser-sync start --startPath /examples/starter/ --server littlejs --files littlejs",
     "build": "node littlejs/examples/starter/build.mjs",
     "build:engine": "node littlejs/src/engineBuild.mjs",
     "test": "node littlejs/test/smoke.mjs"
@@ -34,5 +34,8 @@
     "roadroller": "~2.1.0",
     "typescript": "~5.1.6",
     "uglify-js": "~3.17.4"
+  },
+  "dependencies": {
+    "browser-sync": "^3.0.4"
   }
 }
