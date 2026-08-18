@@ -2,4 +2,4 @@
 
 A JS13K game about unicorns and rainbows
 
-[Play](/js13k-2026-unicorns-and-rainbows/littlejs/examples/starter/)
+[Play](https://thecodingjames.github.io/js13k-2026-unicorns-and-rainbows/littlejs/examples/starter/)
